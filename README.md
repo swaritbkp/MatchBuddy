@@ -3,7 +3,7 @@
 > **Your guardian in the crowd.**
 > Built for India's largest events — IPL, concerts, Kumbh Mela.
 
-[![Live Demo](https://img.shields.io/badge/Live-Demo-blue)](CLOUD_RUN_URL)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-blue)](#)
 [![Built with Gemini](https://img.shields.io/badge/Built%20with-Gemini%201.5%20Flash-orange)](https://ai.google.dev)
 [![Firebase](https://img.shields.io/badge/Realtime-Firebase-yellow)](https://firebase.google.com)
 [![Cloud Run](https://img.shields.io/badge/Deployed-Cloud%20Run-blue)](https://cloud.google.com/run)
@@ -11,10 +11,10 @@
 ---
 
 ## 🎥 Demo Video
-[▶ Watch 60-second demo](YOUTUBE_URL)
+[▶ Watch 60-second demo]([Insert your YouTube Demo URL here])
 
 ## 🌐 Live App
-[matchbuddy.app → CLOUD_RUN_URL](CLOUD_RUN_URL)
+[matchbuddy.app]([Deploy and paste your Cloud Run URL here])
 
 ---
 
@@ -271,7 +271,7 @@ Copy this URL — this is your hackathon submission URL.
 
 **Swarit Sharma**
 Product · Engineering · Design
-[LinkedIn](https://linkedin.com/in/YOUR_PROFILE)
+[LinkedIn]([Insert your LinkedIn Profile URL here])
 
 ---
 
