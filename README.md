@@ -9,6 +9,7 @@
 [![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688)](https://fastapi.tiangolo.com)
 [![React](https://img.shields.io/badge/Frontend-React%2018-61DAFB)](https://react.dev)
 [![PWA](https://img.shields.io/badge/PWA-Installable-blueviolet)](#)
+[![Deploy in 1 Click](https://img.shields.io/badge/Deploy%20in%201%20Click-GitHub%20Actions-brightgreen)](#)
 
 **Topics:** `gemini` `firebase` `fastapi` `react` `cloud-run` `pwa` `stadium-safety` `hackathon`
 
