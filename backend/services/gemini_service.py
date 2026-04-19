@@ -1,7 +1,7 @@
 """
 Gemini AI Service — SOS triage, parking analysis, exit advice.
 
-Uses Gemini 1.5 Flash (text) and Gemini 1.5 Flash (vision/multimodal).
+Uses Gemini 2.0 Flash (text) and Gemini 2.0 Flash (vision/multimodal).
 All calls are async-safe via ``generate_content_async``.
 """
 
@@ -24,12 +24,13 @@ if GEMINI_API_KEY:
 else:
     logger.warning("GEMINI_API_KEY not set — Gemini calls will use fallback responses")
 
-MODEL_NAME = "gemini-1.5-flash"
+TEXT_MODEL = os.getenv("GEMINI_TEXT_MODEL", "gemini-2.0-flash")
+VISION_MODEL = os.getenv("GEMINI_VISION_MODEL", "gemini-2.0-flash")
 
 
-def _get_model() -> genai.GenerativeModel:
+def _get_model(model_name: str = None) -> genai.GenerativeModel:
     """Return a configured Gemini model instance."""
-    return genai.GenerativeModel(MODEL_NAME)
+    return genai.GenerativeModel(model_name or TEXT_MODEL)
 
 
 # ── 1. SOS Triage ───────────────────────────────────────────────────
@@ -72,7 +73,7 @@ Respond with valid JSON only. No markdown. No explanation.
 }}"""
 
     try:
-        model = _get_model()
+        model = _get_model(TEXT_MODEL)
         response = await model.generate_content_async(prompt)
 
         # Handle content-blocked responses
@@ -118,7 +119,7 @@ row number, or landmark.
 Be specific. Maximum 15 words. No filler words."""
 
     try:
-        model = _get_model()
+        model = _get_model(VISION_MODEL)
         image_bytes = base64.b64decode(image_base64)
         image = Image.open(io.BytesIO(image_bytes))
         response = await model.generate_content_async([prompt, image])
@@ -156,7 +157,7 @@ Name the best gate, state the time saved vs worst option.
 Be direct. No filler. Max 25 words."""
 
     try:
-        model = _get_model()
+        model = _get_model(TEXT_MODEL)
         response = await model.generate_content_async(prompt)
 
         if not response.parts:
@@ -192,7 +193,7 @@ Give a 1-sentence personalized exit recommendation.
 Name the best gate. Mention crowd level. Max 20 words."""
 
     try:
-        model = _get_model()
+        model = _get_model(TEXT_MODEL)
         response = await model.generate_content_async(prompt)
 
         if not response.parts:

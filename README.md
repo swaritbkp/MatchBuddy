@@ -3,7 +3,7 @@
 > **Your guardian in the crowd.**
 > Built for India's largest events — IPL, concerts, Kumbh Mela.
 
-[![Built with Gemini](https://img.shields.io/badge/Built%20with-Gemini%201.5%20Flash-orange)](https://ai.google.dev)
+[![Built with Gemini](https://img.shields.io/badge/Built%20with-Gemini%202.0%20Flash-orange)](https://ai.google.dev)
 [![Firebase](https://img.shields.io/badge/Realtime-Firebase-yellow)](https://firebase.google.com)
 [![Cloud Run](https://img.shields.io/badge/Deployed-Cloud%20Run-blue)](https://cloud.google.com/run)
 [![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688)](https://fastapi.tiangolo.com)

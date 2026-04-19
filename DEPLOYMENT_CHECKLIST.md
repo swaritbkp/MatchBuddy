@@ -57,6 +57,8 @@ uvicorn main:app --reload --port 8080
 **5. View the App**
 Open your browser and navigate to: **[http://localhost:8080](http://localhost:8080)**
 
+*(Note: Local dev sometimes requires BOTH ports free if you are running `npm run dev`: 8080 for backend and 5173 for frontend Vite dev server.)*
+
 *(Note: Without API keys in `.env`, the app launches in demo mode and API calls will safely error internally.)*
 
 ---

@@ -54,7 +54,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["*"],  # TODO: restrict origins to your Cloud Run URL before production
     allow_methods=["*"],
     allow_headers=["*"],
 )

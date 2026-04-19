@@ -27,13 +27,14 @@ if firebase_creds_json and firebase_db_url:
     try:
         creds_dict = json.loads(firebase_creds_json)
         cred = credentials.Certificate(creds_dict)
-        firebase_admin.initialize_app(
-            cred,
-            {
-                "databaseURL": firebase_db_url,
-                "storageBucket": firebase_bucket,
-            },
-        )
+        if not firebase_admin._apps:
+            firebase_admin.initialize_app(
+                cred,
+                {
+                    "databaseURL": firebase_db_url,
+                    "storageBucket": firebase_bucket,
+                },
+            )
         _firebase_initialised = True
         logger.info("Firebase Admin SDK initialised successfully")
     except Exception as e:
