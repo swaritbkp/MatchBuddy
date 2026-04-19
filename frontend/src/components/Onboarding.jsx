@@ -104,11 +104,11 @@ export default function Onboarding() {
       </div>
 
       {(step === 2 || step === 3) && (
-        <div className="fixed bottom-0 left-0 w-full p-5 bg-stadium">
+        <div className="fixed bottom-0 left-0 w-full p-5 bg-stadium z-10">
           <button 
             onClick={handleNext} 
             disabled={step === 2 ? (!userName || !seatZone || !venueName) : (!contactName || !contactPhone)}
-            className="w-full bg-blue-500 rounded-2xl h-14 font-bold text-lg touch-active disabled:opacity-50 disabled:bg-gray-600"
+            className="w-full bg-blue-500 rounded-2xl h-14 font-bold text-lg touch-active disabled:opacity-50 disabled:bg-gray-600 shadow-[0_0_20px_rgba(59,130,246,0.3)]"
             role="button"
             aria-label="Next Step"
           >
@@ -116,6 +116,11 @@ export default function Onboarding() {
           </button>
         </div>
       )}
+
+      <div className="fixed bottom-2 left-0 w-full flex justify-center items-center gap-2 text-blue-300 opacity-40 pointer-events-none z-0">
+        <div className="font-['Inter'] text-[9px] font-black uppercase tracking-[0.2em]">Made with Love by BilotaAI</div>
+        <span className="text-sm">🐾</span>
+      </div>
     </div>
   )
 }

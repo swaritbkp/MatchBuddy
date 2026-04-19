@@ -68,7 +68,7 @@ export default function Home() {
             MATCHBUDDY
         </div>
         <button className="text-[#ADC6FF] hover:bg-[#2A2A2A] transition-colors active:scale-95 duration-200 p-1 rounded-full flex items-center justify-center overflow-hidden w-8 h-8 relative" aria-label="User Profile">
-          <img alt="User Profile" className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7gzfEWHKX2LlvE6L4URltCsy_wfHvmtTFF9a5AYGNxrZSM2n45JIb0bidHCLI4BEnjh5O1D7cmKZXdknPm4DEhebsGWHPtSqUXD1iQ6GRXpJwYM3vlX94MbQhjEdY-DLD8tPSkb8EfjRCT2c2eFIowoI0jTs0v8w_ikv093DM_HNKBPADu6HMMzUUq2UzEGCHvLyiYF3v3AdX_0phwnjejIpDKeiW_9hoGtpmDShl6I8VAI4qFAynZ1qngYEU_3e56GW4lUK1MSI"/>
+          <img alt="User Profile" className="w-full h-full object-cover" src="/images/cat_mascot_icon.png"/>
           <div className={`absolute bottom-0 right-0 w-2 h-2 rounded-full ${isOnline ? 'bg-green-500' : 'bg-red-500'}`} aria-label={isOnline ? "Online" : "Offline"}></div>
         </button>
       </header>
@@ -170,6 +170,11 @@ export default function Home() {
             )}
           </div>
         </section>
+
+        <div className="mt-8 mb-4 flex justify-center items-center gap-2 text-[#ADC6FF] opacity-60">
+          <div className="font-['Inter'] text-[10px] font-black uppercase tracking-[0.2em]">Made with Love by BilotaAI</div>
+          <span className="text-sm">🐾</span>
+        </div>
       </main>
 
       {/* BottomNavBar */}

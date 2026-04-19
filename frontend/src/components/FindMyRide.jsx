@@ -131,7 +131,7 @@ export default function FindMyRide() {
           </button>
           <h1 className="font-['Inter'] font-black tracking-tight uppercase text-xl text-[#ADC6FF] bg-clip-text text-transparent bg-gradient-to-br from-[#ADC6FF] to-[#4D8EFF]">MATCHBUDDY</h1>
           <button className="text-[#ADC6FF] hover:bg-[#2A2A2A] transition-colors active:scale-95 transition-transform duration-200 p-2 rounded-xl flex items-center justify-center">
-            <img alt="User profile avatar" className="w-8 h-8 rounded-full object-cover border border-outline-variant/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJDdbkZQxHFGhQ69A_Iby22aageF2LxMCAw7a_uC0235FUM70m4bp8mJCuTGdAfJWdrbb9vPc-AdH2tAC4cPRpHEKzfqLmyWGNPLXeAO75vgn9lsm-UWxkhA6mhBxeNe9zkrRxNU73cGeSBE2TuwkkwH-nh-5I4dSMzn923ujla9X9lyDLXxrUgcQv5IEz-rrMRDRKZ8QFVMqD1zJWQyE9JrFvjhotAYljHZgc-xLjTMnbf9amoYbwnxMlQqyDwKcye02gkCmseug"/>
+            <img alt="User profile avatar" className="w-8 h-8 rounded-full object-cover border border-outline-variant/30" src="/images/cat_mascot_icon.png"/>
           </button>
         </header>
 
@@ -139,7 +139,7 @@ export default function FindMyRide() {
         <main className="flex-1 relative w-full h-full">
           {/* Live Map Overlay */}
           <div className="absolute inset-0 z-0 bg-surface-container-lowest">
-            <img alt="Dark Map" className="w-full h-full object-cover opacity-40 mix-blend-luminosity filter contrast-125 brightness-75" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-i3A_e2cNe9FUeRgetMbicFLjU8PV4nEY6jeDgEQgJrODMikdesdvpRjV5gkJ8Y35t1mtHQJPdzBfrqkY2m9FWIam8hpHtptzaFqrZUFlDCDd5abHf8BnAfisZQzy8Bf7OQhGNvYHvK7dN_czuP3eJ3X1fqd26nnYD-vWtrIifgh3W7QB9RJafDVSwJKeVMARM65YbAME5uBLeJzIDGkQXd5d1QkY0mGLImiayNCK72y4znRYJbFfry5LzzAd4xhnkrJ8RbNBc2k"/>
+            <img alt="Dark Map" className="w-full h-full object-cover opacity-80 mix-blend-screen filter brightness-75" src="/images/ipl_cat_stadium.png"/>
             {/* Glowing Path */}
             <svg className="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="xMidYMid slice" viewBox="0 0 400 800">
               <path className="drop-shadow-[0_0_8px_rgba(173,198,255,0.6)]" d="M 200,600 Q 180,500 250,400 T 150,250" fill="none" stroke="url(#pathGradient)" strokeDasharray="10 10" strokeLinecap="round" strokeLinejoin="round" strokeWidth="6"></path>

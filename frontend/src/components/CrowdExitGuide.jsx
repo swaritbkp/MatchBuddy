@@ -79,7 +79,7 @@ export default function CrowdExitGuide() {
             </button>
             <h1 className="font-['Inter'] font-black tracking-tight uppercase text-xl text-[#ADC6FF] bg-clip-text text-transparent bg-gradient-to-br from-[#ADC6FF] to-[#4D8EFF]">MATCHBUDDY</h1>
             <button className="w-8 h-8 rounded-full bg-surface-container-highest overflow-hidden hover:bg-[#2A2A2A] transition-colors active:scale-95 duration-200">
-                <img alt="User Avatar" className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEK2XNMeYtNdo7tQWx-qymI95H-ts1JDUcUfOwr-kroB87HjEv0aucLdDV3z2eXCmWf7faMpgyya8XhslrkpCUOkw9mvE3ynwytke5-9IFX9lGH4MzdDBVxKUc8kJaDXIfRVuX9Hcatbekj74cNvpz2Lq7U__b-aceNW4JTn0HBrZDAI-XIfa9p0oWeJPMjgpq4CzSF8z7AXJw89kaQxorWQ6OwLAh8gVe-WAKsHchs02TS7FXOb_Sf7KipxGZYsOE2xXPdYelRTg"/>
+                <img alt="User Avatar" className="w-full h-full object-cover" src="/images/cat_mascot_icon.png"/>
             </button>
         </header>
 
