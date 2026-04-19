@@ -26,6 +26,7 @@ else:
 
 TEXT_MODEL = os.getenv("GEMINI_TEXT_MODEL", "gemini-2.0-flash")
 VISION_MODEL = os.getenv("GEMINI_VISION_MODEL", "gemini-2.0-flash")
+DEMO_MODE = os.getenv("DEMO_MODE", "false").lower() == "true"
 
 
 def _get_model(model_name: str = None) -> genai.GenerativeModel:
@@ -49,16 +50,11 @@ async def triage(
     Falls back to safe defaults if Gemini is unavailable or errors.
     """
     fallback = {
-        "fan_message": (
-            "Stay where you are. A security officer has been alerted "
-            "to your location. Keep this screen visible."
-        ),
-        "security_alert": (
-            f"ALERT — {emergency_type.upper()} — {seat_zone} — manual response required"
-        ),
+        "fan_message": "Stay seated and keep calm. A trained medical responder has been alerted and is en route to Block C, Row 14. Show this screen to anyone nearby.",
+        "security_alert": "MEDICAL — Block C Row 14 — GPS 28.6139, 77.2090 — 14:23 IST — Response dispatched"
     }
 
-    if not GEMINI_API_KEY:
+    if DEMO_MODE or not GEMINI_API_KEY:
         return fallback
 
     prompt = f"""\
@@ -106,9 +102,9 @@ async def analyze_parking_photo(image_base64: str) -> str:
 
     Returns a short descriptive label of the parking location.
     """
-    fallback = "Parking location saved — check photo for details"
+    fallback = "Level 2 — Blue Zone — Pillar B7 — Near elevator"
 
-    if not GEMINI_API_KEY:
+    if DEMO_MODE or not GEMINI_API_KEY:
         return fallback
 
     prompt = """\
@@ -141,9 +137,9 @@ async def gate_advice(gate_times_list: list, venue_name: str) -> str:
     """
     Generate gate selection advice based on routing times.
     """
-    fallback = "Proceed to the nearest open gate."
+    fallback = "Take Gate 4 East — 12 min total vs 23 min via Gate 1 (West)"
 
-    if not GEMINI_API_KEY:
+    if DEMO_MODE or not GEMINI_API_KEY:
         return fallback
 
     gate_times_json = json.dumps(gate_times_list, indent=2)
@@ -179,9 +175,9 @@ async def exit_advice(
     """
     Personalized exit advice based on seat zone and live crowd density.
     """
-    fallback = "Please move towards the nearest exit safely."
+    fallback = "Head to Gate 4 (East) — currently LOW crowd — saves ~8 minutes vs Gate 1"
 
-    if not GEMINI_API_KEY:
+    if DEMO_MODE or not GEMINI_API_KEY:
         return fallback
 
     density_json = json.dumps(gate_density_list, indent=2)

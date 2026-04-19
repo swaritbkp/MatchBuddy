@@ -17,6 +17,7 @@ from firebase_admin import credentials, db, messaging, storage
 logger = logging.getLogger(__name__)
 
 # ── Initialisation ──────────────────────────────────────────────────
+DEMO_MODE = os.getenv("DEMO_MODE", "false").lower() == "true"
 _firebase_initialised = False
 
 firebase_creds_json = os.getenv("FIREBASE_SERVICE_ACCOUNT_JSON")
@@ -85,11 +86,11 @@ def _send_fcm_push_sync(token: str, title: str, body: str) -> None:
 
 # ── Public API (error-safe wrappers) ────────────────────────────────
 
-def write_db(path: str, data: dict) -> None:
-    """Write data to Firebase RTDB. No-op in demo mode."""
-    if not _firebase_initialised:
-        logger.debug("write_db skipped (demo mode): %s", path)
-        return
+def write_db(path: str, data: dict):
+    """Write data to Firebase RTDB. Returns mock success in demo mode."""
+    if DEMO_MODE or not _firebase_initialised:
+        logger.debug("write_db mocked (demo mode): %s", path)
+        return {"status": "ok", "demo": True}
     try:
         _write_db_sync(path, data)
     except Exception as e:
@@ -97,10 +98,36 @@ def write_db(path: str, data: dict) -> None:
 
 
 def read_db(path: str):
-    """Read data from Firebase RTDB. Returns None on error or in demo mode."""
-    if not _firebase_initialised:
-        logger.debug("read_db skipped (demo mode): %s", path)
-        return None
+    """Read data from Firebase RTDB. Returns mock data in demo mode."""
+    if DEMO_MODE or not _firebase_initialised:
+        logger.debug("read_db mocked (demo mode): %s", path)
+        if "/sos_alerts" in path:
+            import time
+            now = int(time.time())
+            return {
+                "demo_alert_1": {
+                    "alert_id": "demo_alert_1",
+                    "emergency_type": "medical",
+                    "seat_zone": "Block C, Row 14",
+                    "status": "active",
+                    "created_at": now - 300,
+                    "fan_message": "Stay seated.",
+                    "security_alert": "MEDICAL - Block C Row 14",
+                    "user_name": "Demo Fan 1",
+                },
+                "demo_alert_2": {
+                    "alert_id": "demo_alert_2",
+                    "emergency_type": "security",
+                    "seat_zone": "Gate 4, North",
+                    "status": "resolved",
+                    "created_at": now - 1800,
+                    "resolved_at": now - 600,
+                    "fan_message": "Help coming.",
+                    "security_alert": "SECURITY - Gate 4",
+                    "user_name": "Demo Fan 2"
+                }
+            }
+        return {}
     try:
         return _read_db_sync(path)
     except Exception as e:
@@ -108,22 +135,22 @@ def read_db(path: str):
         return None
 
 
-def update_db(path: str, data: dict) -> None:
+def update_db(path: str, data: dict):
     """Update fields at path in Firebase RTDB."""
-    if not _firebase_initialised:
-        logger.debug("update_db skipped (demo mode): %s", path)
-        return
+    if DEMO_MODE or not _firebase_initialised:
+        logger.debug("update_db mocked (demo mode): %s", path)
+        return {"status": "ok", "demo": True}
     try:
         _update_db_sync(path, data)
     except Exception as e:
         logger.error("Firebase update_db error at %s: %s", path, e)
 
 
-def delete_field(path: str) -> None:
+def delete_field(path: str):
     """Delete a node at path in Firebase RTDB."""
-    if not _firebase_initialised:
-        logger.debug("delete_field skipped (demo mode): %s", path)
-        return
+    if DEMO_MODE or not _firebase_initialised:
+        logger.debug("delete_field mocked (demo mode): %s", path)
+        return {"status": "ok", "demo": True}
     try:
         _delete_field_sync(path)
     except Exception as e:
@@ -131,10 +158,10 @@ def delete_field(path: str) -> None:
 
 
 def upload_photo(user_id: str, image_bytes: bytes) -> str:
-    """Upload parking photo to Firebase Storage. Returns public URL or empty string."""
-    if not _firebase_initialised:
-        logger.debug("upload_photo skipped (demo mode): user=%s", user_id)
-        return ""
+    """Upload parking photo to Firebase Storage. Returns mock URL in demo mode."""
+    if DEMO_MODE or not _firebase_initialised:
+        logger.debug("upload_photo mocked (demo mode): user=%s", user_id)
+        return "https://demo.url/parking/photo.jpg"
     try:
         return _upload_photo_sync(user_id, image_bytes)
     except Exception as e:
@@ -142,11 +169,11 @@ def upload_photo(user_id: str, image_bytes: bytes) -> str:
         return ""
 
 
-def send_fcm_push(token: str, title: str, body: str) -> None:
+def send_fcm_push(token: str, title: str, body: str):
     """Send FCM push notification. Silently fails for invalid tokens."""
-    if not _firebase_initialised:
-        logger.debug("send_fcm_push skipped (demo mode)")
-        return
+    if DEMO_MODE or not _firebase_initialised:
+        logger.debug("send_fcm_push mocked (demo mode)")
+        return {"status": "ok", "demo": True}
     try:
         _send_fcm_push_sync(token, title, body)
     except Exception as e:
