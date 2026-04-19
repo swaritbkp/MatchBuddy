@@ -1,12 +1,32 @@
+# Dependencies
 node_modules/
-__pycache__/
-*.pyc
-.env
-*.egg-info/
-.DS_Store
-Thumbs.db
-vite.config.js.timestamp*
-*.local
-.pytest_cache/
+venv/
+.venv/
+
+# Build artifacts
 dist/
 frontend/dist/
+
+# Python cache
+__pycache__/
+*.pyc
+*.egg-info/
+
+# Environment / secrets
+.env
+*.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Test cache
+.pytest_cache/
+
+# Misc
+vite.config.js.timestamp*
+*.zip

@@ -2,7 +2,7 @@
 MatchBuddy API — Route Tests.
 
 Mocks all external services (Gemini, Firebase, Maps) to test
-route logic in isolation.
+route logic in isolation. No real API keys required.
 """
 
 import os
@@ -19,14 +19,30 @@ from main import app  # noqa: E402
 client = TestClient(app)
 
 
+# ── Helpers ─────────────────────────────────────────────────────────
+
+def _make_sos_payload(user_name="Test User", emergency_type="medical"):
+    return {
+        "user_name": user_name,
+        "seat_zone": "Section A, Row 1",
+        "gps_lat": 19.0596,
+        "gps_lng": 72.9196,
+        "emergency_type": emergency_type,
+        "contact_phone": "9999999999",
+        "venue_name": "DY Patil Stadium",
+    }
+
+
 # ── Health Check ────────────────────────────────────────────────────
 
-def test_health():
+def test_health_check():
+    """GET /health returns status ok with app name."""
     response = client.get("/health")
     assert response.status_code == 200
     body = response.json()
     assert body["app"] == "MatchBuddy"
     assert body["status"] == "ok"
+    assert body["version"] == "2.0"
 
 
 # ── SOS Routes ──────────────────────────────────────────────────────
@@ -38,18 +54,10 @@ def test_sos_trigger_validation():
 
 
 def test_sos_trigger_invalid_type():
-    """Invalid emergency type should return 422."""
+    """Invalid emergency type (e.g. 'explosion') should return 422."""
     response = client.post(
         "/api/sos/trigger",
-        json={
-            "user_name": "Test User",
-            "seat_zone": "Section A",
-            "gps_lat": 19.0,
-            "gps_lng": 72.0,
-            "emergency_type": "invalid_type",
-            "contact_phone": "9999999999",
-            "venue_name": "Test Venue",
-        },
+        json=_make_sos_payload(emergency_type="explosion"),
     )
     assert response.status_code == 422
 
@@ -70,21 +78,9 @@ def test_sos_trigger_success(mock_fcm, mock_firebase, mock_gemini):
     from routes.sos import _sos_attempts
     _sos_attempts.clear()
 
-    response = client.post(
-        "/api/sos/trigger",
-        json={
-            "user_name": "Test User",
-            "seat_zone": "Section A, Row 1",
-            "gps_lat": 19.0596,
-            "gps_lng": 72.9196,
-            "emergency_type": "medical",
-            "contact_phone": "9999999999",
-            "venue_name": "DY Patil Stadium",
-        },
-    )
+    response = client.post("/api/sos/trigger", json=_make_sos_payload())
     assert response.status_code == 200
     data = response.json()
-    assert "alert_id" in data
     assert data["alert_id"].startswith("sos_")
     assert "fan_message" in data
     assert data["status"] == "active"
@@ -97,7 +93,7 @@ def test_sos_trigger_success(mock_fcm, mock_firebase, mock_gemini):
 @patch("routes.sos.firebase_service.write_db")
 @patch("routes.sos.firebase_service.send_fcm_push")
 def test_sos_rate_limit(mock_fcm, mock_firebase, mock_gemini):
-    """4th SOS trigger within 1 hour should be rate-limited."""
+    """4th SOS trigger within 1 hour should be rate-limited (429)."""
     mock_gemini.return_value = {
         "fan_message": "Stay calm.",
         "security_alert": "ALERT",
@@ -109,30 +105,14 @@ def test_sos_rate_limit(mock_fcm, mock_firebase, mock_gemini):
     for i in range(3):
         response = client.post(
             "/api/sos/trigger",
-            json={
-                "user_name": "RateLimitUser",
-                "seat_zone": "Zone B",
-                "gps_lat": 19.0,
-                "gps_lng": 72.0,
-                "emergency_type": "security",
-                "contact_phone": "1234567890",
-                "venue_name": "Test Venue",
-            },
+            json=_make_sos_payload(user_name="RateLimitUser"),
         )
         assert response.status_code == 200
 
     # 4th attempt should be rejected
     response = client.post(
         "/api/sos/trigger",
-        json={
-            "user_name": "RateLimitUser",
-            "seat_zone": "Zone B",
-            "gps_lat": 19.0,
-            "gps_lng": 72.0,
-            "emergency_type": "security",
-            "contact_phone": "1234567890",
-            "venue_name": "Test Venue",
-        },
+        json=_make_sos_payload(user_name="RateLimitUser"),
     )
     assert response.status_code == 429
 
@@ -167,6 +147,7 @@ def test_sos_invalid_status():
 # ── Crowd Routes ────────────────────────────────────────────────────
 
 def test_crowd_checkin_valid():
+    """Valid crowd check-in should write to Firebase and return 200."""
     with patch("routes.crowd.firebase_service.write_db") as mock_db:
         with patch("routes.crowd.firebase_service.read_db", return_value=None):
             mock_db.return_value = None
@@ -180,6 +161,7 @@ def test_crowd_checkin_valid():
             )
             assert response.status_code == 200
             assert response.json()["received"] is True
+            mock_db.assert_called_once()
 
 
 def test_crowd_checkin_invalid_density():
@@ -196,18 +178,42 @@ def test_crowd_checkin_invalid_density():
 
 
 def test_crowd_density_empty_venue():
+    """Venue with no reports returns empty gates list."""
     with patch("routes.crowd.firebase_service.read_db", return_value=None):
         response = client.get("/api/crowd/density/nonexistent-venue")
         assert response.status_code == 200
         assert response.json()["gates"] == []
 
 
+@patch("routes.crowd.gemini_service.exit_advice", new_callable=AsyncMock)
+def test_crowd_exit_advice(mock_gemini):
+    """Exit advice endpoint calls Gemini and returns recommendation."""
+    mock_gemini.return_value = "Take Gate 3, it has low crowd density."
+    response = client.post(
+        "/api/crowd/exit-advice",
+        json={
+            "seat_zone": "Section B",
+            "venue_name": "Test Stadium",
+            "gate_density": [
+                {"gate_id": "Gate 1", "density": "high"},
+                {"gate_id": "Gate 3", "density": "low"},
+            ],
+        },
+    )
+    assert response.status_code == 200
+    data = response.json()
+    assert "gemini_advice" in data
+    assert data["seat_zone"] == "Section B"
+    mock_gemini.assert_called_once()
+
+
 # ── MeetPoint Routes ───────────────────────────────────────────────
 
-def test_meetpoint_create():
-    with patch(
-        "routes.meetpoint.firebase_service.write_db", return_value=None
-    ):
+def test_meetpoint_create_and_retrieve():
+    """Create a meetpoint, then retrieve it by ID — full round-trip."""
+    created_data = {}
+
+    with patch("routes.meetpoint.firebase_service.write_db", return_value=None):
         response = client.post(
             "/api/meetpoint/create",
             json={
@@ -219,13 +225,28 @@ def test_meetpoint_create():
             },
         )
         assert response.status_code == 200
-        data = response.json()
-        assert "meet_id" in data
-        assert data["meet_id"].startswith("meet_")
-        assert "share_url" in data
+        created_data = response.json()
+        assert created_data["meet_id"].startswith("meet_")
+        assert "share_url" in created_data
+
+    # Retrieve the same meetpoint
+    with patch(
+        "routes.meetpoint.firebase_service.read_db",
+        return_value={
+            "meet_id": created_data["meet_id"],
+            "pin_lat": 19.0596,
+            "pin_lng": 72.9196,
+            "landmark_label": "Main Gate North",
+            "expires_at": int(time.time()) + 14400,
+        },
+    ):
+        response = client.get(f"/api/meetpoint/{created_data['meet_id']}")
+        assert response.status_code == 200
+        assert response.json()["landmark_label"] == "Main Gate North"
 
 
 def test_meetpoint_retrieve_expired():
+    """Expired meetpoints should return 410 Gone."""
     expired_data = {
         "meet_id": "meet_abc123",
         "pin_lat": 19.0,
@@ -233,21 +254,15 @@ def test_meetpoint_retrieve_expired():
         "expires_at": int(time.time()) - 100,
         "landmark_label": "Test",
     }
-    with patch(
-        "routes.meetpoint.firebase_service.read_db", return_value=expired_data
-    ):
-        with patch(
-            "routes.meetpoint.firebase_service.delete_field",
-            return_value=None,
-        ):
+    with patch("routes.meetpoint.firebase_service.read_db", return_value=expired_data):
+        with patch("routes.meetpoint.firebase_service.delete_field", return_value=None):
             response = client.get("/api/meetpoint/meet_abc123")
             assert response.status_code == 410
 
 
 def test_meetpoint_not_found():
-    with patch(
-        "routes.meetpoint.firebase_service.read_db", return_value=None
-    ):
+    """Non-existent meetpoint should return 404."""
+    with patch("routes.meetpoint.firebase_service.read_db", return_value=None):
         response = client.get("/api/meetpoint/meet_nonexistent")
         assert response.status_code == 404
 
@@ -255,9 +270,8 @@ def test_meetpoint_not_found():
 # ── Vehicle Routes ──────────────────────────────────────────────────
 
 def test_vehicle_save_no_photo():
-    with patch(
-        "routes.vehicle.firebase_service.write_db", return_value=None
-    ):
+    """Save parking without photo — GPS + manual note only."""
+    with patch("routes.vehicle.firebase_service.write_db", return_value=None):
         response = client.post(
             "/api/vehicle/save",
             data={
@@ -275,8 +289,36 @@ def test_vehicle_save_no_photo():
 
 
 def test_vehicle_not_found():
-    with patch(
-        "routes.vehicle.firebase_service.read_db", return_value=None
-    ):
+    """Non-existent vehicle should return 404."""
+    with patch("routes.vehicle.firebase_service.read_db", return_value=None):
         response = client.get("/api/vehicle/nonexistent_user")
         assert response.status_code == 404
+
+
+@patch("routes.vehicle.maps_service.get_route_time", new_callable=AsyncMock)
+@patch("routes.vehicle.gemini_service.gate_advice", new_callable=AsyncMock)
+def test_vehicle_gate_suggestion(mock_gemini, mock_maps):
+    """Gate suggestion calls Maps API + Gemini and returns recommendation."""
+    mock_maps.return_value = {"minutes": 5, "text": "5 mins"}
+    mock_gemini.return_value = "Take Gate 2, saves 8 minutes."
+
+    response = client.post(
+        "/api/vehicle/gate-suggestion",
+        json={
+            "user_gps_lat": 19.06,
+            "user_gps_lng": 72.92,
+            "vehicle_gps_lat": 19.07,
+            "vehicle_gps_lng": 72.93,
+            "venue_name": "Test Stadium",
+            "gates": [
+                {"gate_id": "Gate 1", "exit_lat": 19.062, "exit_lng": 72.921},
+                {"gate_id": "Gate 2", "exit_lat": 19.058, "exit_lng": 72.922},
+            ],
+        },
+    )
+    assert response.status_code == 200
+    data = response.json()
+    assert "recommended_gate" in data
+    assert "gemini_advice" in data
+    assert "gate_breakdown" in data
+    assert len(data["gate_breakdown"]) == 2

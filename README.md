@@ -3,18 +3,22 @@
 > **Your guardian in the crowd.**
 > Built for India's largest events — IPL, concerts, Kumbh Mela.
 
-[![Live Demo](https://img.shields.io/badge/Live-Demo-blue)](#)
 [![Built with Gemini](https://img.shields.io/badge/Built%20with-Gemini%201.5%20Flash-orange)](https://ai.google.dev)
 [![Firebase](https://img.shields.io/badge/Realtime-Firebase-yellow)](https://firebase.google.com)
 [![Cloud Run](https://img.shields.io/badge/Deployed-Cloud%20Run-blue)](https://cloud.google.com/run)
+[![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688)](https://fastapi.tiangolo.com)
+[![React](https://img.shields.io/badge/Frontend-React%2018-61DAFB)](https://react.dev)
+[![PWA](https://img.shields.io/badge/PWA-Installable-blueviolet)](#)
+
+**Topics:** `gemini` `firebase` `fastapi` `react` `cloud-run` `pwa` `stadium-safety` `hackathon`
 
 ---
 
-## 🎥 Demo Video
-[▶ Watch 60-second demo]([Insert your YouTube Demo URL here])
-
 ## 🌐 Live App
-[matchbuddy.app]([Deploy and paste your Cloud Run URL here])
+> **Paste your Cloud Run URL here after deploying** (see [Deploy to Cloud Run](#-deploy-to-google-cloud-run) below)
+
+## 🎥 Demo Video
+> **Paste your YouTube/Loom 60-second demo URL here**
 
 ---
 
@@ -120,31 +124,37 @@ Link expires in 4 hours automatically.
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/YOUR_USERNAME/matchbuddy.git
-cd matchbuddy
+git clone https://github.com/swaritbkp/MatchBuddy.git
+cd MatchBuddy
 ```
 
 ### 2. Set up environment variables
 ```bash
-cp .env.example .env
-# Edit .env and fill in all API keys
+cp .env.example backend/.env
+# Edit backend/.env and fill in all API keys (see .env.example for the full list)
 ```
 
-### 3. Run the backend
+### 3. Build the frontend
+```bash
+cd frontend
+npm install
+npm run build
+cd ..
+```
+
+### 4. Run the backend (serves frontend too)
 ```bash
 cd backend
 pip install -r requirements.txt
 uvicorn main:app --reload --port 8080
-# API available at http://localhost:8080
-# Docs at http://localhost:8080/docs
+# App available at http://localhost:8080
+# API docs at http://localhost:8080/docs
 ```
 
-### 4. Run the frontend
+### 5. Run tests
 ```bash
-cd frontend
-npm install
-npm run dev
-# App available at http://localhost:5173
+cd backend
+pytest tests/ -v
 ```
 
 ---
@@ -271,9 +281,11 @@ Copy this URL — this is your hackathon submission URL.
 
 **Swarit Sharma**
 Product · Engineering · Design
-[LinkedIn]([Insert your LinkedIn Profile URL here])
+[LinkedIn](https://linkedin.com/in/swaritbkp)
 
 ---
+
+*Made with Love by BilotaAI 🐾*
 
 ## 📄 License
 MIT — open source, free to use and adapt.

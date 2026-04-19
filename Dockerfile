@@ -1,6 +1,20 @@
+# ──────────────────────────────────────────────────────────────
+# Stage 1: Build the React frontend
+# ──────────────────────────────────────────────────────────────
+FROM node:18-alpine AS frontend-build
+
+WORKDIR /app/frontend
+COPY frontend/package.json frontend/package-lock.json ./
+RUN npm ci --production=false
+COPY frontend/ .
+RUN npm run build
+
+# ──────────────────────────────────────────────────────────────
+# Stage 2: Production Python image
+# ──────────────────────────────────────────────────────────────
 FROM python:3.11-slim
 
-# Security: create non-root user
+# Security: non-root user
 RUN groupadd -r matchbuddy && useradd -r -g matchbuddy matchbuddy
 
 WORKDIR /app
@@ -12,8 +26,8 @@ RUN pip install --no-cache-dir -r backend/requirements.txt
 # Copy backend source
 COPY backend/ ./backend/
 
-# Copy pre-built frontend (run `cd frontend && npm run build` first)
-COPY frontend/dist/ ./frontend/dist/
+# Copy built frontend from stage 1
+COPY --from=frontend-build /app/frontend/dist/ ./frontend/dist/
 
 # Set working directory for uvicorn
 WORKDIR /app/backend
