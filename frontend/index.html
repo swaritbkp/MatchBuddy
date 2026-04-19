@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport"
+          content="width=device-width,
+                   initial-scale=1.0,
+                   maximum-scale=1.0,
+                   user-scalable=no" />
+    <meta name="theme-color" content="#0A0A0A" />
+    <meta name="description"
+          content="MatchBuddy — Stadium Safety and Mobility OS.
+                   SOS, vehicle finder, crowd exit intelligence." />
+    <meta name="apple-mobile-web-app-capable"
+          content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style"
+          content="black-translucent" />
+    <meta name="apple-mobile-web-app-title"
+          content="MatchBuddy" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet"/>
+
+    <link rel="icon" type="image/svg+xml" href="/icon-192.svg" />
+    <link rel="apple-touch-icon" href="/icon-192.svg" />
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- Google Maps JavaScript API -->
+    <script>
+      window.initGoogleMaps = function() {
+        window.googleMapsLoaded = true;
+        window.dispatchEvent(new Event('google-maps-ready'));
+      }
+    </script>
+    <script async
+      src="https://maps.googleapis.com/maps/api/js?key=<%= VITE_GOOGLE_MAPS_API_KEY %>&callback=initGoogleMaps&libraries=places">
+    </script>
+
+    <title>MatchBuddy — Stadium Safety OS</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

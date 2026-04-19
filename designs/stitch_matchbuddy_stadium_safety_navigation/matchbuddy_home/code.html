@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MatchBuddy - Home</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed-dim": "#ffb786",
+                        "on-secondary-fixed-variant": "#93000b",
+                        "secondary-fixed": "#ffdad6",
+                        "secondary-fixed-dim": "#ffb4ab",
+                        "on-secondary-fixed": "#410002",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface-container-highest": "#353534",
+                        "tertiary-container": "#df7412",
+                        "outline": "#8c909f",
+                        "on-secondary": "#690005",
+                        "on-primary": "#002e6a",
+                        "surface-bright": "#3a3939",
+                        "primary": "#adc6ff",
+                        "on-error": "#690005",
+                        "primary-container": "#4d8eff",
+                        "on-tertiary-container": "#461f00",
+                        "surface-dim": "#131313",
+                        "on-surface-variant": "#c2c6d6",
+                        "secondary-container": "#db0418",
+                        "on-tertiary-fixed-variant": "#723600",
+                        "primary-fixed": "#d8e2ff",
+                        "tertiary": "#ffb786",
+                        "on-tertiary": "#502400",
+                        "surface": "#131313",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#004395",
+                        "tertiary-fixed": "#ffdcc6",
+                        "background": "#131313",
+                        "surface-container": "#201f1f",
+                        "inverse-on-surface": "#313030",
+                        "error": "#ffb4ab",
+                        "surface-container-high": "#2a2a2a",
+                        "surface-tint": "#adc6ff",
+                        "on-background": "#e5e2e1",
+                        "on-secondary-container": "#ffecea",
+                        "on-primary-container": "#00285d",
+                        "outline-variant": "#424754",
+                        "on-primary-fixed": "#001a42",
+                        "inverse-primary": "#005ac2",
+                        "inverse-surface": "#e5e2e1",
+                        "primary-fixed-dim": "#adc6ff",
+                        "on-tertiary-fixed": "#311400",
+                        "surface-variant": "#353534",
+                        "on-surface": "#e5e2e1",
+                        "secondary": "#ffb4ab",
+                        "surface-container-low": "#1c1b1b",
+                        "error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {},
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-dim text-on-surface min-h-screen antialiased flex flex-col pt-16 pb-24">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-[#131313] bg-gradient-to-b from-[#1C1B1B] to-transparent shadow-[0px_0px_32px_rgba(173,198,255,0.06)]">
+<button class="text-[#ADC6FF] hover:bg-[#2A2A2A] transition-colors active:scale-95 duration-200 p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">shield</span>
+</button>
+<div class="font-['Inter'] font-black tracking-tight uppercase text-xl text-[#ADC6FF] bg-clip-text text-transparent bg-gradient-to-br from-[#ADC6FF] to-[#4D8EFF]">
+            MATCHBUDDY
+        </div>
+<button class="text-[#ADC6FF] hover:bg-[#2A2A2A] transition-colors active:scale-95 duration-200 p-1 rounded-full flex items-center justify-center overflow-hidden w-8 h-8">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="close up headshot of a person looking forward, modern minimalist style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7gzfEWHKX2LlvE6L4URltCsy_wfHvmtTFF9a5AYGNxrZSM2n45JIb0bidHCLI4BEnjh5O1D7cmKZXdknPm4DEhebsGWHPtSqUXD1iQ6GRXpJwYM3vlX94MbQhjEdY-DLD8tPSkb8EfjRCT2c2eFIowoI0jTs0v8w_ikv093DM_HNKBPADu6HMMzUUq2UzEGCHvLyiYF3v3AdX_0phwnjejIpDKeiW_9hoGtpmDShl6I8VAI4qFAynZ1qngYEU_3e56GW4lUK1MSI"/>
+</button>
+</header>
+<main class="flex-1 flex flex-col px-6 py-6 gap-8 overflow-y-auto">
+<!-- Hero SOS Section -->
+<section class="flex flex-col items-center">
+<div class="w-full max-w-md bg-surface-container-lowest rounded-2xl p-4 shadow-[inset_0px_0px_20px_rgba(147,0,10,0.1)]">
+<button class="w-full relative flex items-center justify-center bg-error-container rounded-xl py-6 overflow-hidden active:scale-95 transition-transform duration-300 shadow-[0_0_32px_rgba(255,180,171,0.2)]">
+<div class="absolute inset-0 bg-error opacity-10 blur-md"></div>
+<div class="relative z-10 flex flex-col items-center gap-2">
+<span class="material-symbols-outlined text-4xl text-error drop-shadow-[0_0_10px_rgba(255,180,171,0.5)]" style="font-variation-settings: 'FILL' 1;">sos</span>
+<span class="font-headline font-black tracking-widest text-lg text-error">EMERGENCY SOS</span>
+</div>
+</button>
+</div>
+</section>
+<!-- 2x2 Feature Grid -->
+<section class="grid grid-cols-2 gap-4">
+<a class="bg-surface-container-low rounded-xl p-5 flex flex-col gap-3 active:scale-95 transition-transform duration-200 border border-outline-variant/10 shadow-[0_4px_20px_rgba(0,0,0,0.2)] relative overflow-hidden group" href="#">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center border border-outline-variant/20 shadow-[0_0_15px_rgba(173,198,255,0.05)]">
+<span class="material-symbols-outlined text-primary-fixed-dim" style="font-variation-settings: 'FILL' 1;">directions_car</span>
+</div>
+<div>
+<h3 class="font-headline font-bold text-on-surface text-base">Find My Car</h3>
+<p class="font-body text-xs text-on-surface-variant mt-1">Locate parked vehicle</p>
+</div>
+</a>
+<a class="bg-surface-container-low rounded-xl p-5 flex flex-col gap-3 active:scale-95 transition-transform duration-200 border border-outline-variant/10 shadow-[0_4px_20px_rgba(0,0,0,0.2)] relative overflow-hidden group" href="#">
+<div class="absolute inset-0 bg-gradient-to-br from-tertiary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center border border-outline-variant/20 shadow-[0_0_15px_rgba(255,183,134,0.05)]">
+<span class="material-symbols-outlined text-tertiary-fixed-dim" style="font-variation-settings: 'FILL' 1;">traffic</span>
+</div>
+<div>
+<h3 class="font-headline font-bold text-on-surface text-base">Exit Smart</h3>
+<p class="font-body text-xs text-on-surface-variant mt-1">Fastest routes out</p>
+</div>
+</a>
+<a class="bg-surface-container-low rounded-xl p-5 flex flex-col gap-3 active:scale-95 transition-transform duration-200 border border-outline-variant/10 shadow-[0_4px_20px_rgba(0,0,0,0.2)] relative overflow-hidden group" href="#">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center border border-outline-variant/20 shadow-[0_0_15px_rgba(173,198,255,0.05)]">
+<span class="material-symbols-outlined text-primary-fixed-dim" style="font-variation-settings: 'FILL' 1;">location_on</span>
+</div>
+<div>
+<h3 class="font-headline font-bold text-on-surface text-base">Meet Point</h3>
+<p class="font-body text-xs text-on-surface-variant mt-1">Set family reunion</p>
+</div>
+</a>
+<a class="bg-surface-container-low rounded-xl p-5 flex flex-col gap-3 active:scale-95 transition-transform duration-200 border border-outline-variant/10 shadow-[0_4px_20px_rgba(0,0,0,0.2)] relative overflow-hidden group" href="#">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center border border-outline-variant/20 shadow-[0_0_15px_rgba(173,198,255,0.05)]">
+<span class="material-symbols-outlined text-primary-fixed-dim" style="font-variation-settings: 'FILL' 1;">info</span>
+</div>
+<div>
+<h3 class="font-headline font-bold text-on-surface text-base">Venue Info</h3>
+<p class="font-body text-xs text-on-surface-variant mt-1">Facilities &amp; rules</p>
+</div>
+</a>
+</section>
+<!-- Gate Crowd Density -->
+<section class="flex flex-col gap-4 mt-4">
+<div class="flex justify-between items-center">
+<h2 class="font-headline font-bold text-sm tracking-wide text-on-surface uppercase">Gate Crowd Density</h2>
+<button class="text-primary text-xs font-medium hover:text-primary-container transition-colors">View Map</button>
+</div>
+<div class="flex overflow-x-auto gap-3 pb-4 -mx-6 px-6 snap-x hide-scrollbar" style="scrollbar-width: none;">
+<!-- Card 1 -->
+<div class="snap-start flex-shrink-0 w-48 bg-surface-container-lowest rounded-xl p-4 flex flex-col gap-3 border border-outline-variant/10 shadow-[inset_0_2px_10px_rgba(255,255,255,0.02)]">
+<div class="flex justify-between items-start">
+<span class="font-headline font-bold text-on-surface text-lg">Gate A</span>
+<div class="bg-surface-container-highest px-2 py-1 rounded-full flex items-center gap-1.5 border border-outline-variant/20 shadow-sm">
+<div class="w-1.5 h-1.5 rounded-full bg-[#22C55E] shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>
+<span class="font-label text-[10px] font-bold text-on-surface uppercase tracking-wider">Low</span>
+</div>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">groups</span>
+<span class="font-label text-xs">Est. wait: 2 mins</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="snap-start flex-shrink-0 w-48 bg-surface-container-lowest rounded-xl p-4 flex flex-col gap-3 border border-outline-variant/10 shadow-[inset_0_2px_10px_rgba(255,255,255,0.02)]">
+<div class="flex justify-between items-start">
+<span class="font-headline font-bold text-on-surface text-lg">Gate B</span>
+<div class="bg-surface-container-highest px-2 py-1 rounded-full flex items-center gap-1.5 border border-outline-variant/20 shadow-sm">
+<div class="w-1.5 h-1.5 rounded-full bg-tertiary shadow-[0_0_8px_rgba(255,183,134,0.6)]"></div>
+<span class="font-label text-[10px] font-bold text-on-surface uppercase tracking-wider">Med</span>
+</div>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">groups</span>
+<span class="font-label text-xs">Est. wait: 12 mins</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="snap-start flex-shrink-0 w-48 bg-surface-container-lowest rounded-xl p-4 flex flex-col gap-3 border border-outline-variant/10 shadow-[inset_0_2px_10px_rgba(255,255,255,0.02)]">
+<div class="flex justify-between items-start">
+<span class="font-headline font-bold text-on-surface text-lg">Gate C</span>
+<div class="bg-surface-container-highest px-2 py-1 rounded-full flex items-center gap-1.5 border border-outline-variant/20 shadow-sm">
+<div class="w-1.5 h-1.5 rounded-full bg-error shadow-[0_0_8px_rgba(255,180,171,0.6)]"></div>
+<span class="font-label text-[10px] font-bold text-on-surface uppercase tracking-wider">High</span>
+</div>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">groups</span>
+<span class="font-label text-xs">Est. wait: 25+ mins</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-[#0E0E0E]/80 backdrop-blur-xl rounded-t-[1.5rem] border-t border-[#424754]/15 shadow-[0_-8px_32px_rgba(0,0,0,0.5)] md:hidden">
+<a class="flex flex-col items-center justify-center text-[#ADC6FF] bg-[#2A2A2A] rounded-xl px-4 py-1 hover:text-[#ADC6FF] hover:opacity-100 active:scale-90 transition-all duration-300 ease-[spring(1,100,20,0)]" href="#">
+<span class="material-symbols-outlined text-xl mb-1" style="font-variation-settings: 'FILL' 1;">emergency</span>
+<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest">Safety</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#C2C6D6] opacity-60 hover:text-[#ADC6FF] hover:opacity-100 active:scale-90 transition-all duration-300 ease-[spring(1,100,20,0)] px-4 py-1" href="#">
+<span class="material-symbols-outlined text-xl mb-1">near_me</span>
+<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest">Nav</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#C2C6D6] opacity-60 hover:text-[#ADC6FF] hover:opacity-100 active:scale-90 transition-all duration-300 ease-[spring(1,100,20,0)] px-4 py-1" href="#">
+<span class="material-symbols-outlined text-xl mb-1">groups</span>
+<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest">Crowd</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#C2C6D6] opacity-60 hover:text-[#ADC6FF] hover:opacity-100 active:scale-90 transition-all duration-300 ease-[spring(1,100,20,0)] px-4 py-1" href="#">
+<span class="material-symbols-outlined text-xl mb-1">person</span>
+<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest">Profile</span>
+</a>
+</nav>
+<style>
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</body></html>
