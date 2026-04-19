@@ -16,7 +16,7 @@
 ---
 
 ## 🌐 Live App
-> **Paste your Cloud Run URL here after deploying** (see [Deploy to Cloud Run](#-deploy-to-google-cloud-run) below)
+> **Paste your Cloud Run URL here after deploying** (see [Deploy to Cloud Run](#-deploy-to-google-cloud-run) below) 🚀
 
 ## 🎥 Demo Video
 > **Paste your YouTube/Loom 60-second demo URL here**
