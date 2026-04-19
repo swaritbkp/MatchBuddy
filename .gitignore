@@ -8,3 +8,5 @@ Thumbs.db
 vite.config.js.timestamp*
 *.local
 .pytest_cache/
+dist/
+frontend/dist/
